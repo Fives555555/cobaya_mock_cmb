@@ -170,7 +170,9 @@ info_fiducial = {
                    'cobaya_mock_cmb.MockSOGoal': {'python_path': '.'},
                    'cobaya_mock_cmb.MockCMBS4': {'python_path': '.'},
                    'cobaya_mock_cmb.MockCMBS4sens0': {'python_path': '.'},
-                   'cobaya_mock_cmb.MockPlanck': {'python_path': '.'}},
+                   'cobaya_mock_cmb.MockPlanck': {'python_path': '.'},
+                   'cobaya_mock_cmb.MockPlanckHighL': {'python_path': '.'},
+                   'cobaya_mock_cmb.MockPlanckLowL': {'python_path': '.'}},
     #'theory': {'class': {"extra_args": fiducial_params_extra}}}
     'theory': {'camb': {"extra_args": fiducial_params_extra}}}
 

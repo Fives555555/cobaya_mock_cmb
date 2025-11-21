@@ -1,5 +1,5 @@
 from ..mock_cmb_likelihood import MockCMBLikelihood
 
 
-class MockPlanck(MockCMBLikelihood):
+class MockPlanckLowL(MockCMBLikelihood):
     pass
