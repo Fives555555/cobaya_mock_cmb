@@ -16,13 +16,17 @@ likelihood:
     #python_path: .
   #cobaya_mock_cmb.MockSOGoal:
     #python_path: .
-  cobaya_mock_cmb.MockCMBS4:
-    python_path: .
+  #cobaya_mock_cmb.MockCMBS4:
+    #python_path: .
   #cobaya_mock_cmb.MockCMBS4sens0:
     #python_path: .
   # in real runs one should use only one among all SO and CMB-S4
   # with possible addition of mock Planck, which is made independent of SO
-  cobaya_mock_cmb.MockPlanck:
+  #cobaya_mock_cmb.MockPlanck:
+    #python_path: .
+  #cobaya_mock_cmb.MockPlanckHighL:
+    #python_path: .
+  cobaya_mock_cmb.MockPlanckLowL:
     python_path: .
 params:
   logA:
