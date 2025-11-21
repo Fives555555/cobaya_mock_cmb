@@ -64,6 +64,11 @@ class MockCMBLikelihood(Likelihood):
         if self.OnlyTT and self.ExcludeTTTEEE:
             raise LoggedError(self.log, "OnlyTT and ExcludeTTTEEE cannot be "
                                         "used simultaneously.")
+        # LG exclude TE
+        self.ExcludeTE = getattr(self, 'ExcludeTE', False)
+        if self.ExcludeTE and self.ExcludeTTTEEE:
+            raise LoggedError(self.log, "ExcludeTE and ExcludeTTTEEE cannot be "
+                                        "used simultaneously.")        
 
         self.init_noise()
 
@@ -85,6 +90,7 @@ class MockCMBLikelihood(Likelihood):
         self.log.info("neglect_TD is %s" % str(self.neglect_TD))
         self.log.info("ExcludeTTTEEE is %s" % str(self.ExcludeTTTEEE))
         self.log.info("OnlyTT is %s" % str(self.OnlyTT))
+        self.log.info("ExcludeTE is %s" % str(self.ExcludeTE)) #LG exclude TE
 
     def init_noise(self):
         """
@@ -301,6 +307,9 @@ class MockCMBLikelihood(Likelihood):
         if not self.ExcludeTTTEEE:
             if self.OnlyTT:
                 cl_req[self.unlensed_clTTTEEE]['tt'] = self.l_max
+            elif self.ExcludeTE: # LG exclude TE
+                cl_req[self.unlensed_clTTTEEE].update({'tt': self.l_max,
+                                                       'ee': self.l_max})                
             else:
                 cl_req[self.unlensed_clTTTEEE].update({'tt': self.l_max,
                                                        'te': self.l_max,
@@ -437,6 +446,11 @@ class MockCMBLikelihood(Likelihood):
         # case with TT only (Added by Siavash Yasini)
         elif self.OnlyTT:
             Cov_the = np.array([[cl['tt'][ll]+self.noise_T[ll]]])
+        
+        # case with TT and EE (no TE) LG exclude TE
+        elif self.ExcludeTE:
+            Cov_the = np.array([[cl['tt'][ll]+self.noise_T[ll], 0],
+                                [0, cl['ee'][ll]+self.noise_P[ll]]])            
 
         # case without B modes nor lensing:
         else:
@@ -494,6 +508,11 @@ class MockCMBLikelihood(Likelihood):
         # case with TT only (Added by Siavash Yasini)
         elif self.OnlyTT:
             Cov_obs = np.array([[self.Cl_fid[0, ll]]])
+
+        # case with TT and EE (no TE) LG exclude TE
+        elif self.ExcludeTE:
+            Cov_obs = np.array([[self.Cl_fid[0, ll], 0],
+                                [0, self.Cl_fid[1, ll]]])            
 
         # case without B modes nor lensing:
         else:
