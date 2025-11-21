@@ -9,7 +9,7 @@ fiducial_file: mock_Planck_fiducial.dat
 # l_min=30 and f_sky=0.2 to add to mock likelihoods for future experiments.
 
 l_min: 2
-l_max: 40 #2500 #40
+l_max: 40
 f_sky: 0.86
 num_channels: 2
 

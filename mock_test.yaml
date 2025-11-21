@@ -10,20 +10,20 @@ likelihood:
   # combining all these is unphysical
   # because they are not independent, covering the same sky
   # done here just for checking that the likelihoods are working
-  cobaya_mock_cmb.MockSO:
-    python_path: .
-  cobaya_mock_cmb.MockSOBaseline:
-    python_path: .
-  cobaya_mock_cmb.MockSOGoal:
-    python_path: .
+ #cobaya_mock_cmb.MockSO:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOBaseline:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOGoal:
+    #python_path: .
   cobaya_mock_cmb.MockCMBS4:
     python_path: .
-  cobaya_mock_cmb.MockCMBS4sens0:
-    python_path: .
+  #cobaya_mock_cmb.MockCMBS4sens0:
+    #python_path: .
   # in real runs one should use only one among all SO and CMB-S4
   # with possible addition of mock Planck, which is made independent of SO
   cobaya_mock_cmb.MockPlanck:
-    python_path: .
+    python_path: /home/ppylg4/Documents/VS_Python_Scripts_Folder/cobaya_runs/cobaya_mock_cmb/cobaya_mock_cmb/mock_Planck/
 params:
   logA:
     prior:
