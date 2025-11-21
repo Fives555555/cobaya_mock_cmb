@@ -511,8 +511,8 @@ class MockCMBLikelihood(Likelihood):
 
         # case with TT and EE (no TE) LG exclude TE
         elif self.ExcludeTE:
-            Cov_obs = np.array([[self.Cl_fid[0, ll], 0],
-                                [0, self.Cl_fid[1, ll]]])            
+            Cov_obs = np.array([[self.Cl_fid[0, ll], np.zeros_like(self.Cl_fid[2, ll])],
+                                [np.zeros_like(self.Cl_fid[2, ll]), self.Cl_fid[1, ll]]])          
 
         # case without B modes nor lensing:
         else:

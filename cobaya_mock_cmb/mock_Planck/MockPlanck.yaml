@@ -12,6 +12,7 @@ l_min: 2
 l_max: 40 #2500 #40
 f_sky: 0.86
 num_channels: 2
+ExcludeTE: True
 
 # angular resolution
 # theta_fwhm must be in in arcmin
