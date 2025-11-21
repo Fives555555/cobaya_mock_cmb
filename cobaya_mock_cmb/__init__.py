@@ -7,6 +7,8 @@ from .mock_cmb_likelihood import MockCMBLikelihood
 
 # Particular examples
 from .mock_Planck import MockPlanck
+from .mock_Planck_highl import MockPlanckHighL
+from .mock_Planck_lowl import MockPlanckLowL
 from .mock_SO import MockSO
 from .mock_SO_baseline import MockSOBaseline
 from .mock_SO_goal import MockSOGoal
