@@ -3,7 +3,7 @@
 from cobaya.model import get_model
 import camb
 import numpy as np
-
+from camb.axion_utils import get_axion_phi_i
 
 H0 = 67.32
 h = H0 / 100
@@ -32,81 +32,40 @@ weighting_factor = 10.0
 
 masses = [1e-28, 1e-27, 1e-26, 1e-25, 1e-24, 1e-23]
 str_masses = [28, 27, 26, 25, 24, 23]
+# TODO Change f_ax for each mass - current is just under upper 2 sigma constraints
 f_axs = [0.008, 0.02, 0.043, 0.58, 0.93, 0.99]
 # masses = [1e-24, 1e-23]
 # str_masses = [24, 23]
 # f_axs = [0.93, 0.99]
+# masses = [1e-23]
+# str_masses = [23]
+# f_axs = [0.99]
+
+# TODO 1e-23 case will not work, fix it
+
+##########################################################
 
 for j in range(len(masses)):
     mass = masses[j]
     f_axion = f_axs[j]
-    # TODO use AxiCAMB axion_utils get_axion_phi_i and get_omega_ax_h2
-    #####################################
-    # To include an axion in the fiducial model (using to compare to that made with the make_fiducial.py file)
-    # determine correct background NO AXIONS
-    pars = camb.CAMBparams()
-    pars = camb.set_params(H0=H0, ombh2=ombh2, omch2=omch2, AccuracyBoost=accuracy)
-
-    results = camb.get_background(pars)
-    frac_lambda0 = results.grhov / (results.grhov + f_axion * results.grhoc)
-
-    de = camb.CAMBparams.make_class_named(
-        camb.dark_energy.EarlyQuintessence, 
-        camb.dark_energy.DarkEnergyModel)
-
-    # Update omch2
-    new_omch2 = (1 - f_axion) * omch2
-    pars = camb.set_params(H0=H0, ombh2=ombh2, omch2=new_omch2, AccuracyBoost=accuracy)
-
-    omaxh2 = f_axion * omch2              
-    phi_i = 1e-5
-    factor = 1.5
-
-
-    def get_rho_ax_crit(results, z):
-        a = 1 / (1 + z)
-        rho, _ = results.get_dark_energy_rho_w(a)
-        return (rho - results.frac_lambda0*results.grhov) / results.grhocrit * a**3
-
-    # determine correct phi INCLUDE AXIONS
-
-    for i in range(100):
-        phi_i = phi_i * factor
-        de.set_params(m=mass*ev_conv, potential_type=1, theta_i=phi_i, 
-        mH=mH, use_fluid_approximation=True, use_PH=True, 
-            weighting_factor=weighting_factor, frac_lambda0=frac_lambda0, use_zc=False)
-        pars.DarkEnergy = de
-        results = camb.get_background(pars)        
-        if get_rho_ax_crit(results, 0.0) * (pars.H0/100)**2 > omaxh2:
-            break
-        if i == 99:
-            print("Failed to find phi_i (stage 1)")
-    phi_i_lower = phi_i / factor
-    phi_i_upper = phi_i
-    for i in range(100):
-        phi_i = (phi_i_lower + phi_i_upper) / 2
-        de.set_params(m=mass*ev_conv, potential_type=1, theta_i=phi_i, 
-            mH=mH, use_fluid_approximation=True, use_PH=True, 
-                weighting_factor=weighting_factor, frac_lambda0=frac_lambda0, use_zc=False)
-        pars.DarkEnergy = de
-        results = camb.get_background(pars)      
-        if get_rho_ax_crit(results, 0.0) * (pars.H0/100)**2 > omaxh2:
-            phi_i_upper = phi_i
-        else:
-            phi_i_lower = phi_i
-        if np.abs(get_rho_ax_crit(results, 0.0) * (pars.H0/100)**2 - omaxh2) < 1e-4:
-            # print(f'Phi_i = {phi_i:.3e}, omaxh2 = {omaxh2:.3e}, f_axion = {f_axion:.3e}')
-            break
-        if i == 99:
-            raise print("Failed to find phi_i (stage 2)")
-
-    de.set_params(m=mass*ev_conv, potential_type=1, theta_i=phi_i, 
-        mH=mH, use_fluid_approximation=True, use_PH=True, 
-            weighting_factor=weighting_factor, frac_lambda0=frac_lambda0, use_zc=False)
-    pars.DarkEnergy = de   
-    ###############################################
-
-
+    accuracy_boost = accuracy
+    axion_params_dict = None
+    if f_axion > 0:
+        print(f"\n0. Finding axion initial conditions for f_ax={f_axion}...")
+        axion_params_dict = get_axion_phi_i(
+            h=h,
+            ombh2=ombh2,
+            omch2_total=omch2,
+            f_ax=f_axion,
+            mass_ev=mass,
+            mH=mH,
+            use_PH=True,
+            weighting_factor=weighting_factor,
+            verbose=False,
+            accuracy=accuracy_boost,
+        )
+        if axion_params_dict is None:
+            raise RuntimeError("Failed to find axion initial conditions")
 
 
     # camb:
@@ -139,12 +98,12 @@ for j in range(len(masses)):
         'AccuracyBoost': accuracy,
         'm': mass*ev_conv,
         'potential_type': 1,
-        'theta_i': phi_i,
+        'theta_i': axion_params_dict['theta_i'],
         'mH': mH,
         'use_fluid_approximation': True,
         'use_PH': True,
         'weighting_factor': weighting_factor,
-        'frac_lambda0': frac_lambda0,
+        'frac_lambda0': axion_params_dict['frac_lambda0'],
         'use_zc': False,
         'nonlinear': False,
         'lens_potential_accuracy': 0,
