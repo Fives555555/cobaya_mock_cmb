@@ -16,6 +16,12 @@ from .mock_CMBS4 import MockCMBS4
 from .mock_CMBS4sens0 import MockCMBS4sens0
 from .mock_SO_clumping import MockSOClumping
 from .mock_CMBS4_clumping import MockCMBS4Clumping
+from .mock_SO_ax28 import MockSOAx28
+from .mock_SO_ax27 import MockSOAx27
+from .mock_SO_ax26 import MockSOAx26
+from .mock_SO_ax25 import MockSOAx25
+from .mock_SO_ax24 import MockSOAx24
+from .mock_SO_ax23 import MockSOAx23
 
 # Metadata
 __author__ = "Michael Rashkovetskyi, Julian B. Muñoz, Daniel J. Eisenstein and Cora Dvorkin"

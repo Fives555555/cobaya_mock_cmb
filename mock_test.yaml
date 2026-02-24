@@ -28,6 +28,18 @@ likelihood:
     #python_path: .
   cobaya_mock_cmb.MockPlanckLowL:
     python_path: .
+  #cobaya_mock_cmb.MockSOAx28:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOAx27:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOAx26:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOAx25:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOAx24:
+    #python_path: .
+  #cobaya_mock_cmb.MockSOAx23:
+    #python_path: .
 params:
   logA:
     prior:
