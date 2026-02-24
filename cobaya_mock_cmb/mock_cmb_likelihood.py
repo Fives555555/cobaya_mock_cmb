@@ -69,6 +69,9 @@ class MockCMBLikelihood(Likelihood):
         if self.ExcludeTE and self.ExcludeTTTEEE:
             raise LoggedError(self.log, "ExcludeTE and ExcludeTTTEEE cannot be "
                                         "used simultaneously.")        
+        if self.ExcludeTE and self.OnlyTT:
+            raise LoggedError(self.log, "ExcludeTE and OnlyTT cannot be "
+                                        "used simultaneously.")
 
         self.init_noise()
 

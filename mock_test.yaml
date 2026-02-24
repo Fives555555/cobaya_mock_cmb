@@ -14,8 +14,8 @@ likelihood:
     #python_path: .
   #cobaya_mock_cmb.MockSOBaseline:
     #python_path: .
-  #cobaya_mock_cmb.MockSOGoal:
-    #python_path: .
+  cobaya_mock_cmb.MockSOGoal:
+    python_path: .
   #cobaya_mock_cmb.MockCMBS4:
     #python_path: .
   #cobaya_mock_cmb.MockCMBS4sens0:

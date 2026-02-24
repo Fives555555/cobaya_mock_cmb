@@ -12,6 +12,6 @@ noise_file: SO_LAT_Nell_T_E_goal_fsky0p4_ILC_CMB.txt
 
 # noise file provides data from ell = 10 to 5000
 
-l_min: 10
+l_min: 30
 l_max: 5000
 f_sky: 0.4
