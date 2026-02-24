@@ -40,7 +40,7 @@ f_axs = [0.008, 0.02, 0.043, 0.58, 0.93, 0.99]
 for j in range(len(masses)):
     mass = masses[j]
     f_axion = f_axs[j]
-
+    # TODO use AxiCAMB axion_utils get_axion_phi_i and get_omega_ax_h2
     #####################################
     # To include an axion in the fiducial model (using to compare to that made with the make_fiducial.py file)
     # determine correct background NO AXIONS
@@ -126,7 +126,15 @@ for j in range(len(masses)):
     }
 
     fiducial_params_extra = {
-        # 'path': '/home/ppylg4/Documents/VS_Python_Scripts_Folder/AxiCAMB',
+        'kmax': 10,
+        'k_per_logint': 130,
+        'AccuracyBoost':2.5,
+        'lens_margin': 2050,
+        'lAccuracyBoost': 1.2,
+        'min_l_logl_sampling': 6000,
+        'DoLateRadTruncation': False,
+        # 'recombination': 'recfast',
+        # 'halofit_version': 'mead',    
         'dark_energy_model': 'EarlyQuintessence',
         'AccuracyBoost': accuracy,
         'm': mass*ev_conv,
@@ -142,26 +150,10 @@ for j in range(len(masses)):
         'lens_potential_accuracy': 0,
         'NonLinear': 'NonLinear_none'
     }
-    # TODO NEED TO ADD THESE
-    fiducial_params_extra = {
-    'kmax': 10,
-    'k_per_logint': 130,
-    'AccuracyBoost':2.5,
-    'nonlinear': False,
-    'lens_potential_accuracy': 0,
-    'NonLinear': 'NonLinear_none',
-    'lens_margin': 2050,
-    'lAccuracyBoost': 1.2,
-    'min_l_logl_sampling': 6000,
-    'DoLateRadTruncation': False
-    # 'recombination': 'recfast',
-    # 'halofit_version': 'mead'
-    }
 
 
     fiducial_params_full = fiducial_params.copy()
     fiducial_params_full.update(fiducial_params_extra)
-    # fiducial_params_full.update(pars)
 
     info_fiducial = {
         'params': fiducial_params,
