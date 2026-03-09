@@ -69,8 +69,8 @@ for j in range(len(masses)):
         if axion_params_dict is None:
             raise RuntimeError("Failed to find axion initial conditions")
 
-        omch2_cdm = (1 - f_axion) * omch2
-        omch2_cdm = max(omch2_cdm, 1e-7)
+    omch2_cdm = (1 - f_axion) * omch2
+    omch2_cdm = max(omch2_cdm, 1e-7)
     # camb:
     # from best fit with fixed massless neutrinos and nuisance-marginalized high-l
     fiducial_params = {
