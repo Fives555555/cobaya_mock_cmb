@@ -22,6 +22,12 @@ from .mock_SO_ax26 import MockSOAx26
 from .mock_SO_ax25 import MockSOAx25
 from .mock_SO_ax24 import MockSOAx24
 from .mock_SO_ax23 import MockSOAx23
+from .mock_Planck_lowl_ax28 import MockPlanckLowLAx28
+from .mock_Planck_lowl_ax27 import MockPlanckLowLAx27
+from .mock_Planck_lowl_ax26 import MockPlanckLowLAx26
+from .mock_Planck_lowl_ax25 import MockPlanckLowLAx25
+from .mock_Planck_lowl_ax24 import MockPlanckLowLAx24
+from .mock_Planck_lowl_ax23 import MockPlanckLowLAx23
 
 # Metadata
 __author__ = "Michael Rashkovetskyi, Julian B. Muñoz, Daniel J. Eisenstein and Cora Dvorkin"

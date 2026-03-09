@@ -19,7 +19,7 @@ ev_conv = 1 / (2.435e27)
 # omch2 = omega_m * h**2 * (1 - baryon_fraction)
 ombh2 = 0.022383
 omch2 = 0.12011
-nnu = 3.046
+# nnu = 3.046
 As = 2.100e-09
 ns = 0.96605
 tau = 0.0543
@@ -27,13 +27,15 @@ tau = 0.0543
 accuracy = 2.5
 # f_axion = 0.02
 # mass = 1e-28
-mH = 150
+mH = 50
 weighting_factor = 10.0
 
 masses = [1e-28, 1e-27, 1e-26, 1e-25, 1e-24, 1e-23]
 str_masses = [28, 27, 26, 25, 24, 23]
 # TODO Change f_ax for each mass - current is just under upper 2 sigma constraints
-f_axs = [0.008, 0.02, 0.043, 0.58, 0.93, 0.99]
+# f_axs = [0.008, 0.02, 0.043, 0.58, 0.93, 0.99]
+# All f_axs are 2% to match the forecast from the Simons Forecast paper
+f_axs = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
 # masses = [1e-24, 1e-23]
 # str_masses = [24, 23]
 # f_axs = [0.93, 0.99]
@@ -85,7 +87,7 @@ for j in range(len(masses)):
     }
 
     fiducial_params_extra = {
-        'kmax': 10,
+        'kmax': 1,
         'k_per_logint': 130,
         'AccuracyBoost':2.5,
         'lens_margin': 2050,
@@ -95,8 +97,8 @@ for j in range(len(masses)):
         # 'recombination': 'recfast',
         # 'halofit_version': 'mead',    
         'dark_energy_model': 'EarlyQuintessence',
-        'AccuracyBoost': accuracy,
-        'm': mass*ev_conv,
+        # 'AccuracyBoost': accuracy,
+        'm': axion_params_dict['m'],
         'potential_type': 1,
         'theta_i': axion_params_dict['theta_i'],
         'mH': mH,
@@ -116,7 +118,8 @@ for j in range(len(masses)):
 
     info_fiducial = {
         'params': fiducial_params,
-        'likelihood': {f'cobaya_mock_cmb.MockSOAx{str_masses[j]}': {'python_path': '.'}},
+        'likelihood': {f'cobaya_mock_cmb.MockSOAx{str_masses[j]}': {'python_path': '.'},
+                       f'cobaya_mock_cmb.MockPlanckLowLAx{str_masses[j]}': {'python_path': '.'}},
         'theory': {'camb': {"extra_args": fiducial_params_extra}}}
 
     model_fiducial = get_model(info_fiducial)
