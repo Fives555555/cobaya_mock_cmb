@@ -35,7 +35,7 @@ str_masses = [28, 27, 26, 25, 24, 23]
 # TODO Change f_ax for each mass - current is just under upper 2 sigma constraints
 # f_axs = [0.008, 0.02, 0.043, 0.58, 0.93, 0.99]
 # All f_axs are 2% to match the forecast from the Simons Forecast paper
-f_axs = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
+# f_axs = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
 # masses = [1e-24, 1e-23]
 # str_masses = [24, 23]
 # f_axs = [0.93, 0.99]
@@ -49,7 +49,7 @@ f_axs = [0.02, 0.02, 0.02, 0.02, 0.02, 0.02]
 
 for j in range(len(masses)):
     mass = masses[j]
-    f_axion = f_axs[j]
+    f_axion = 0.02 #f_axs[j]
     accuracy_boost = accuracy
     axion_params_dict = None
     if f_axion > 0:
@@ -69,20 +69,21 @@ for j in range(len(masses)):
         if axion_params_dict is None:
             raise RuntimeError("Failed to find axion initial conditions")
 
-
+        omch2_cdm = (1 - f_axion) * omch2
+        omch2_cdm = max(omch2_cdm, 1e-7)
     # camb:
     # from best fit with fixed massless neutrinos and nuisance-marginalized high-l
     fiducial_params = {
         # LambdaCDM parameters
-        'H0': 67.32,
+        'H0': H0,
         # '100*theta_s': 1.041920539e+00,
-        'ombh2': 0.022383,
+        'ombh2': ombh2,
         # 'nnu': 3.046,  # three massless neutrinos
-        'omch2': 0.12011,
-        'As': 2.100e-09,
+        'omch2': omch2_cdm,
+        'As': As,
         # 'sigma8': 8.245006041e-01,
-        'ns':  0.96605,
-        'tau':  0.0543,
+        'ns':  ns,
+        'tau':  tau,
         
     }
 
